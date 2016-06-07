@@ -32,14 +32,13 @@
                                  color:(UIColor *)color
                                  angle:(CGFloat)angle {
     self.layer.borderColor = color.CGColor;
-    self.layer.borderWidth = 5.f;
-    self.layer.cornerRadius = 10.f;
+    self.layer.borderWidth = 2.f;
+    self.layer.cornerRadius = 5.f;
 
     UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
     label.text = [text uppercaseString];
     label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack"
-                                 size:48.f];
+    label.font = [UIFont boldSystemFontOfSize:32.0f];
     label.textColor = color;
     [self addSubview:label];
 
