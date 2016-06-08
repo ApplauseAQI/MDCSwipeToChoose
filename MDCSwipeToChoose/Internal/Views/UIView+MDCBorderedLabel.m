@@ -39,7 +39,8 @@
     label.text = [text uppercaseString];
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont boldSystemFontOfSize:32.0f];
-    label.textColor = color;
+    label.textColor = [UIColor whiteColor];
+    label.backgroundColor = color;
     [self addSubview:label];
 
     self.transform = CGAffineTransformRotate(CGAffineTransformIdentity,
