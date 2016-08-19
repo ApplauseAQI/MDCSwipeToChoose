@@ -45,22 +45,32 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
     self = [super initWithFrame:frame];
     if (self) {
         _options = options ? options : [MDCSwipeToChooseViewOptions new];
-        [self setupView];
-        [self constructImageView];
-        [self constructLikedView];
-        [self constructNopeImageView];
-        [self setupSwipeToChoose];
+        [self addSwipeSubviews];
     }
     return self;
 }
 
+#pragma mark - Dynamic setters
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [self removeSwipeSubviews];
+    [self addSwipeSubviews];
+}
+
 #pragma mark - Internal Methods
 
-- (void)setupView {
-    self.backgroundColor = [UIColor clearColor];    
-    self.layer.masksToBounds = YES;
-    self.layer.borderWidth = 1.f;
-    self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+- (void)addSwipeSubviews {
+    [self constructImageView];
+    [self constructLikedView];
+    [self constructNopeImageView];
+    [self setupSwipeToChoose];
+}
+
+- (void)removeSwipeSubviews {
+    [self.imageView removeFromSuperview];
+    [self.likedView removeFromSuperview];
+    [self.nopeView removeFromSuperview];
 }
 
 - (void)constructImageView {
@@ -103,7 +113,7 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
 
     __block UIView *likedImageView = self.likedView;
     __block UIView *nopeImageView = self.nopeView;
-    __weak MDCSwipeToChooseView *weakself = self;
+    __weak MDCSwipeToChooseView *weakSelf = self;
     options.onPan = ^(MDCPanState *state) {
         if (state.direction == MDCSwipeDirectionNone) {
             likedImageView.alpha = 0.f;
@@ -116,8 +126,8 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
             nopeImageView.alpha = 0.f;
         }
 
-        if (weakself.options.onPan) {
-            weakself.options.onPan(state);
+        if (weakSelf.options.onPan) {
+            weakSelf.options.onPan(state);
         }
     };
 
